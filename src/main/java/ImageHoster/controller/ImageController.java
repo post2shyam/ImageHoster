@@ -52,6 +52,7 @@ public class ImageController {
         Image image = imageService.getImage(id);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments", image.getComments());
         return "images/image";
     }
 
@@ -105,6 +106,7 @@ public class ImageController {
             String error = "Only the owner of the image can edit the image";
             model.addAttribute("editError", error);
             model.addAttribute("tags", image.getTags());
+            model.addAttribute("comments", image.getComments());
             return "images/image";
         }
 
@@ -166,7 +168,7 @@ public class ImageController {
         if (!currentImage.getUser().getId().equals(loggeduser.getId())) {
             String error = "Only the owner of the image can delete the image";
             model.addAttribute("deleteError", error);
-
+            model.addAttribute("comments", currentImage.getComments());
             return "images/image";
         }
         imageService.deleteImage(imageId);
