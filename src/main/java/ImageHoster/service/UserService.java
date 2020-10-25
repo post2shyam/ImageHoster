@@ -12,13 +12,8 @@ public class UserService {
     private UserRepository userRepository;
 
     //Call the registerUser() method in the UserRepository class to persist the user record in the database
-    public boolean registerUser(User newUser) {
-        //Check for password strength before registering the user successfully
-        if (isWeakPassword(newUser.getPassword())) {
-           return false;
-        }
+    public void registerUser(User newUser) {
         userRepository.registerUser(newUser);
-        return true;
     }
 
     //Since we did not have any user in the database, therefore the user with username 'upgrad' and password 'password' was hard-coded
@@ -37,27 +32,4 @@ public class UserService {
         }
     }
 
-    private boolean isWeakPassword(String password) {
-        return calculatePasswordStrength(password) < 3;
-    }
-
-    private int calculatePasswordStrength(String password) {
-        //total score of password
-        int iPasswordScore = 0;
-
-        if (password.length() >= 3) {
-            //if it contains one digit, add 1 to total score
-            if (password.matches("(?=.*[0-9]).*"))
-                iPasswordScore += 1;
-
-            //if it contains one letter, add 1 to total score
-            if (password.matches("(?=.*[A-Za-z]).*"))
-                iPasswordScore += 1;
-
-            //if it contains one special character, add 1 to total score
-            if (password.matches("(?=.*[~!@#$%^&*()_-]).*"))
-                iPasswordScore += 1;
-        }
-        return iPasswordScore;
-    }
 }
